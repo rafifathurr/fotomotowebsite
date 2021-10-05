@@ -1,0 +1,18 @@
+[
+    {
+        "id":"1",
+        "booking" : "Pre-Wedding"
+    },
+    {
+        "id": "2",
+        "booking" : "Wedding"
+    },
+    {
+        "id": "3",
+        "booking" : "Event Photoshoot"
+    },
+    {
+        "id": "4",
+        "booking" : "Model Photoshoot"
+    }
+]

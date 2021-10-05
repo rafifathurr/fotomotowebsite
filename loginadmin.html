@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Login page</title>
+    <link rel="stylesheet" href="assets/css/index.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <form
+        action="admin.html"
+        method="get"
+        id="myForm"
+        onsubmit=" return validasi()"
+      >
+        <h1>Login</h1>
+        <div class="textbox">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Username" name="username" />
+        </div>
+        <div class="textbox">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" name="password" />
+        </div>
+        <input type="submit" class="btn" value="Login" name="submit" />
+      </form>
+    </div>
+  </body>
+  <script type="text/javascript">
+    function validasi(){
+    var username = document.forms["myForm"]["username"].value;
+    var password = document.forms["myForm"]["password"].value;
+
+    localStorage.setItem("user", username);
+    localStorage.setItem("pass", password);
+
+    var usr = localStorage.getItem("user");
+    var pss = localStorage.getItem("pass");
+
+    if(usr == "admin" && pss == "admin123"){
+      return true;
+    }
+    else if(username == "" || password == ""){
+      alert("Masukan username dan password Anda");
+      return false;
+    }
+    else{
+      alert("Username atau password yang Anda masukan SALAH");
+      return false;
+    }
+  }
+  </script>
+</html>
