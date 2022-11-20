@@ -1,47 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Contact Us</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <link href="assets/img/Icon/fotomotoicon.png" rel="icon">
-  <link href="assets/img/Icon/fotomotoicon.png" rel="apple-touch-icon">
-
-  <!-- FONTS -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
-
-  <!-- CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-</head>
+<!-- ====== Include head ======  -->
+<?php $currentPage = "Contact Us"; ?>
+<?php include 'partials/head.php'?>
 
 <body>
 
-  <header id="header" class="fixed-top  d-flex justify-content-center align-items-center ">
-
-    <nav class="nav-menu d-none d-lg-block">
-      <ul>
-        <li><a href="home.html">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li class="active"><a href="contact.html">Contact Us</a></li>
-
-      </ul>
-    </nav><!-- .nav-menu -->
-
-  </header><!-- End Header -->
+<!-- ====== Include navbar ====== -->
+<?php include 'partials/navbar.php'?>
 
   <main id="main">
 
@@ -52,10 +19,6 @@
         <h2>Contact Us</h2>
         <p>For Futher Information and Services</p>
       </div>
-
-      <div class="row">
-
-        <div class="col-lg-6">
 
           <div class="row">
             <div class="col-md-12">
@@ -85,9 +48,7 @@
             </div>
           </div>
 
-        </div>
-
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <form action="forms/contact.php" method="post" role="form" class="php-email-form">
             <div class="form-row">
               <div class="col-md-6 form-group">
@@ -114,9 +75,7 @@
             </div>
             <div class="text-center"><button type="submit">Send Message</button></div>
           </form>
-        </div>
-
-      </div>
+        </div> -->
 
     </div>
   </section><!-- End Contact Us Section -->

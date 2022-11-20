@@ -1,48 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Fotomoto Photograph</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <link href="assets/img/Icon/fotomotoicon.png" rel="icon">
-  <link href="assets/img/Icon/fotomotoicon.png" rel="apple-touch-icon">
-
-  <!-- FONTS -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
-
-  <!-- CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-</head>
+<!-- ====== Include head ======  -->
+<?php $currentPage = "Home"; ?>
+<?php include 'partials/head.php'?>
 
 <body>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top  d-flex justify-content-center align-items-center header-transparent">
-
-    <nav class="nav-menu d-none d-lg-block">
-      <ul>
-        <li class="active"><a href="home.html">Home</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#contact">Contact Us</a></li>
-
-      </ul>
-    </nav><!-- .nav-menu -->
-
-  </header><!-- End Header -->
+<!-- ====== Include navbar ====== -->
+<?php include 'partials/navbar.php'?>
 
   <!-- ======= Hero Section ======= -->
   <section id="hero">
@@ -59,7 +25,7 @@
       <div class="container">
 
         <div class="section-title">
-          <a href="about.html"><h2>About Us</h2></a>
+          <a href="about.php"><h2>About Us</h2></a>
           <p>FotoMoto Photograph is a company provides photography services located in Jakarta, Indonesia</p>
         </div>
 
@@ -113,7 +79,7 @@
       <div class="container">
 
         <div class="section-title">
-          <a href="services.html"><h2>Our Services</h2></a>
+          <a href="services.php"><h2>Our Services</h2></a>
           <p>Our Service all about photography and videography</p>
         </div>
 
@@ -226,7 +192,7 @@
       <div class="container">
 
         <div class="section-title">
-          <a href="portfolio.html"><h2>Our Portfolio</h2></a>
+          <a href="portfolio.php"><h2>Our Portfolio</h2></a>
           <p>Our Collection</p>
         </div>
 
@@ -245,7 +211,7 @@
             <div class="portfolio-info">
               <h4>Prewedding Sample</h4>
               <a href="assets/img/portfolio/prewedding-1.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Prewedding Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -254,7 +220,7 @@
             <div class="portfolio-info">
               <h4>Model Sample</h4>
               <a href="assets/img/portfolio/Model-1.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Model Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -263,7 +229,7 @@
             <div class="portfolio-info">
               <h4>Event Sample</h4>
               <a href="assets/img/portfolio/Event-1.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Event Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -272,7 +238,7 @@
             <div class="portfolio-info">
               <h4>Prewedding Sample</h4>
               <a href="assets/img/portfolio/prewedding-2.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Prewedding Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -281,7 +247,7 @@
             <div class="portfolio-info">
               <h4>Wedding Sample</h4>
               <a href="assets/img/portfolio/wedding-1.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Wedding Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -290,7 +256,7 @@
             <div class="portfolio-info">
               <h4>Event Sample</h4>
               <a href="assets/img/portfolio/Event-2.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Event Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -299,7 +265,7 @@
             <div class="portfolio-info">
               <h4>Prewedding Sample</h4>
               <a href="assets/img/portfolio/prewedding-3.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Prewedding Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -308,7 +274,7 @@
             <div class="portfolio-info">
               <h4>Wedding Sample</h4>
               <a href="assets/img/portfolio/wedding-2.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Wedding Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -317,7 +283,7 @@
             <div class="portfolio-info">
               <h4>Wedding Sample</h4>
               <a href="assets/img/portfolio/wedding-3.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Wedding Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -326,7 +292,7 @@
             <div class="portfolio-info">
               <h4>Event Sample</h4>
               <a href="assets/img/portfolio/Event-3.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Event Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -335,7 +301,7 @@
             <div class="portfolio-info">
               <h4>Model Sample</h4>
               <a href="assets/img/portfolio/Model-2.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Model Sample"><i class="bx bx-plus"></i></a>
-              <a href="portfolio.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              <a href="portfolio.php" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
 
@@ -349,7 +315,7 @@
       <div class="container">
 
         <div class="section-title">
-          <a href="contact.html"><h2>Contact Us</h2></a>
+          <a href="contact.php"><h2>Contact Us</h2></a>
           <p>For Futher Information and Services</p>
         </div>
 

@@ -1,48 +1,20 @@
+<?php 
+require 'function/function.php';
+
+$category = $_SESSION["category"];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Booking Page</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <link href="assets/img/Icon/fotomotoicon.png" rel="icon">
-  <link href="assets/img/Icon/fotomotoicon.png" rel="apple-touch-icon">
-
-  <!-- FONTS -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
-
-  <!-- CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-</head>
+<!-- ====== Include head ======  -->
+<?php $currentPage = "Book Service"; ?>
+<?php include 'partials/head.php'?>
 
 <body>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top  d-flex justify-content-center align-items-center ">
-
-    <nav class="nav-menu d-none d-lg-block">
-      <ul>
-        <li><a href="home.html">Home</a></li>
-        <li ><a href="about.html">About Us</a></li>
-        <li class="active"><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-
-      </ul>
-    </nav><!-- .nav-menu -->
-
-  </header><!-- End Header -->
+<!-- ====== Include navbar ====== -->
+<?php include 'partials/navbar.php'?>
 
   <main id="main">
     <section id="contact" class="pricing">
@@ -66,10 +38,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="subject service" id="subject" placeholder="Subject Services" readonly/>
-                <script>
-                  document.getElementById('subject').value=localStorage.getItem('val');
-                </script>
+                <input type="text" class="form-control" name="subject service" id="subject" value="<?= $category;?>" placeholder="Subject Services" readonly/>
                 <div class="validate"></div>
               </div>
               <div class="form-group">
@@ -80,40 +49,6 @@
                 <div class="validate"></div>
               </div>
               <form action="book.html"></form>
-              <script>
-                function storeData() {
-                  const name = document.getElementById('name').value;
-                  const email = document.getElementById('email').value;
-                  const subject = document.getElementById('subject').value;
-                  const datebook = document.getElementById('datebook').value;
-                  const additional = document.getElementById('additional').value;
-
-                  if(name=="" || email=="" || subject=="" || datebook=="" || additional==""){
-                    alert("Please input the details data")
-                  }
-          
-                  
-                  else{
-                    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-
-                    const newBooking = {
-                    name,
-                    email,
-                    subject,
-                    datebook,
-                    additional
-                  };
-
-                  bookings.push(newBooking);
-
-                  localStorage.setItem('bookings', JSON.stringify(bookings));
-                  alert("Your booking successfully, please check your email verification")
-                  }
-
-                  
-                }
-              </script>
-              
                 <div class="btn-wrap">
                   <button type="submit" onclick="storeData()" class="btn-buy">Book Now</button>
                 </div>
