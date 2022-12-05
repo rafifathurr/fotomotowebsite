@@ -1,6 +1,6 @@
 <?php 
 // Connect database
-$conn = mysqli_connect("localhost","root","","fotomoto","8888");
+$conn = mysqli_connect("localhost","root","","fotomoto","9595");
 session_start();
 $category = "";
 $status = "";
