@@ -1,8 +1,14 @@
 <?php 
 require 'function/function.php';
 
+if(!isset($_SESSION["signin"])){
+  header("Location: signin.php");
+  exit;
+}
+
 if(isset($_POST["book_service"])){
   $_SESSION["category"] = $_POST["cat_val"];
+  $_SESSION["price"] = $_POST["price"];
   header("Location: book.php");
   exit;
 }
@@ -48,6 +54,7 @@ if(isset($_POST["book_service"])){
                 <div class="btn-wrap">
                   <form action="" method="post">
                     <input type="hidden" name="cat_val" value="Pre-Wedding">
+                    <input type="hidden" name="price" value="500000">
                     <button name="book_service" class="btn-buy" >Book Now</button>
                   </form>
                 </div>
@@ -70,6 +77,7 @@ if(isset($_POST["book_service"])){
                 <div class="btn-wrap">
                   <form action="" method="post">
                     <input type="hidden" name="cat_val" value="Wedding">
+                    <input type="hidden" name="price" value="2000000">
                     <button name="book_service" class="btn-buy">Book Now</button>
                   </form>
                 </div>
@@ -92,6 +100,7 @@ if(isset($_POST["book_service"])){
                 <div class="btn-wrap">
                   <form action="" method="post">
                     <input type="hidden" name="cat_val" value="Event Photoshoot">
+                    <input type="hidden" name="price" value="500000">
                     <button name="book_service" class="btn-buy">Book Now</button>
                   </form>
                 </div>
@@ -114,6 +123,7 @@ if(isset($_POST["book_service"])){
                 <div class="btn-wrap">
                   <form action="" method="post">
                     <input type="hidden" name="cat_val" value="Model Photo Session">
+                    <input type="hidden" name="price" value="200000">
                     <button name="book_service" class="btn-buy">Book Now</button>
                   </form>
                 </div>

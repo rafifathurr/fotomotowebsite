@@ -4,12 +4,7 @@ require 'function/function.php';
 if(!isset($_SESSION["signin"])){
   header("Location: signin.php");
   exit;
-}elseif(!isset($_SESSION["category"])){
-  header("Location: services.php");
 }
-
-$category = $_SESSION["category"];
-$price = $_SESSION["price"];
 
 if(isset($_POST["booking"])){
   if(bookservice($_POST)>0){

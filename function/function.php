@@ -1,6 +1,6 @@
 <?php 
 // Connect database
-$conn = mysqli_connect("localhost","root","","fotomoto","9595");
+$conn = mysqli_connect("localhost","root","","fotomoto","3306");
 session_start();
 $category = "";
 $status = "";
@@ -130,41 +130,25 @@ function checkout($data){
 
 }
 
-function addshipping($data){
+function bookservice($data){
     global $conn;
 
-    $recipient = stripslashes($data["recipient"]);
-    $phone = stripslashes($data["phone"]);
-    $province = stripslashes($data["province"]);
-    $city = stripslashes($data["city"]);
-    $district = stripslashes($data["district"]);
-    $zip = (int)stripslashes($data["zip"]);
-    $address = stripslashes($data["address"]);
-    $note = stripslashes($data["note"]);
-    $shiptype = stripslashes($data["shiptype"]);
-    $invoice = (int)stripslashes($data["invoice_id"]);
-    $user_id = (int)stripslashes($data["user_id"]);
-    $ongkir = (int)stripslashes($data["ongkir"]);
-    $qty = 1;
-    $statusorder = "checkout";
+    // number for invoice
+    $invoice = rand(0,10000000);
+
+    $email = stripslashes($data["email"]);
+    $subject = stripslashes($data["subject"]);
+    $price = (int)stripslashes($data["price"]);
+    $datebook = stripslashes($data["datebook"]);
+    $additionaladd = stripslashes($data["additional"]);
+    $user_id = (int)$data["user_id"];
+    $status = "book";
     
-    $insert_ongkir = "INSERT INTO cart_payment VALUES 
-                ('','$user_id','0',now(),'$invoice','$ongkir','$qty','$ongkir','$statusorder','','')";
+    $insert_ongkir = "INSERT INTO booking VALUES 
+                (0,'$email','$invoice','$subject','$price','$datebook','$additionaladd','$status','$user_id', null, now(),null)";
     mysqli_query($conn, $insert_ongkir);
 
-    $update_status = "UPDATE cart_payment SET 
-                status_order = 'wait payment' WHERE user_id = '$user_id' and status_order ='$statusorder'";
-    mysqli_query($conn, $update_status);
-
-    $addship = "INSERT INTO shipping 
-                values 
-                ('','$invoice','$recipient','$phone',
-                '$province','$city','$district','$zip',
-                '$address','$note','$shiptype',now())";;
-    mysqli_query($conn, $addship);
-
     return mysqli_affected_rows($conn);
-
 }
 
 // register account

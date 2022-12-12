@@ -16,10 +16,10 @@
     <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
 
     <!-- Main CSS File -->
-    <?php if($currentPage == "Login"):?>
+    <?php if($currentPage == "Sign In"):?>
         <link href="../assets/css/index.css" rel="stylesheet">
     <?php else:?>
         <link href="../assets/css/style.css" rel="stylesheet">
-    <?php endif;?>\
+    <?php endif;?>
   </head>
 </html>

@@ -7,16 +7,40 @@ body {
     background-size: cover;
 }
 
+.section-register{
+    display:flex;
+    font-size:13px;
+    justify-content: center;
+}
+
+.section-register p{
+    color:white;
+    margin-right:10px;
+}
+
+.forgot{
+    display:block;
+    right:0;
+    text-align: right;
+    font-size: 13px;
+    margin-top:5%;
+    margin-bottom:3%;
+}
+
 .container {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     padding: 20px 25px;
-    width: 300px;
+    width: 25%;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, .6);
     box-shadow: 0 0 10px rgba(255, 255, 255, .3);
+}
+
+::placeholder{
+    color:rgb(186, 186, 186);
 }
 
 .img-login {
@@ -42,6 +66,7 @@ body {
     padding: 8px 0;
     margin: 8px 0;
     color: white;
+    background-color: transparent;
     border-bottom: 2px solid #B6AA56;
 }
 

@@ -33,7 +33,7 @@ if(isset($_POST["signin"])){
    $result = mysqli_query($conn, $query);
 
    // cek username
-   if( mysqli_num_rows($result) === 1){
+   if( mysqli_num_rows($result) == 1){
 
        // cek password
        $row = mysqli_fetch_assoc($result);
@@ -69,26 +69,35 @@ if(isset($_POST["signin"])){
          $_SESSION["email"] = '';
          echo "
          <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Login Failed!', 
+            setTimeout(function () { Swal.fire('Sign In Failed!', 
                'Invalid Email or Password!', 
                'error')}, 100);
             </script>
          ";
        }
-   }
+   }else{
+    $_SESSION["email"] = '';
+    echo "
+    <script type='text/javascript'>
+       setTimeout(function () { Swal.fire('Sign In Failed!', 
+          'Invalid Email or Password!', 
+          'error')}, 100);
+       </script>
+    ";
+  }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <!-- ====== Include head ======  -->
-<?php $currentPage = "Login"; ?>
+<?php $currentPage = "Sign In"; ?>
 <?php include 'partials/head.php'?>
 
   <body>
     <div class="container">
       <form action="" method="POST">
         <div class="row">
-          <img class="img-login" src="../assets/img/hero/Fotomoto_2.png" alt="">
+          <img class="img-login" src="../assets/img/hero/admin_logo.png" alt="">
         </div>
         <div class="textbox">
           <i class="fas fa-user"></i>
@@ -107,28 +116,4 @@ if(isset($_POST["signin"])){
     <?php include 'partials/footer.php'?>
 
   </body>
-  <!-- <script type="text/javascript">
-    function validasi(){
-    var username = document.forms["myForm"]["username"].value;
-    var password = document.forms["myForm"]["password"].value;
-
-    localStorage.setItem("user", username);
-    localStorage.setItem("pass", password);
-
-    var usr = localStorage.getItem("user");
-    var pss = localStorage.getItem("pass");
-
-    if(usr == "admin" && pss == "admin123"){
-      return true;
-    }
-    else if(username == "" || password == ""){
-      alert("Masukan username dan password Anda");
-      return false;
-    }
-    else{
-      alert("Username atau password yang Anda masukan SALAH");
-      return false;
-    }
-  }
-  </script> -->
 </html>

@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <?php if($currentPage != "Home"): ?>
+  <?php if($currentPage == "Home"): ?>
     <title><?= $currentPage?></title>
   <?php else:?>
-    <title>Fotomoto Photograph</title>
+    <title>Fotomoto Photograph - <?= $currentPage?></title>
   <?php endif;?>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -27,7 +27,11 @@
   <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <?php if($currentPage == "Sign In" || $currentPage == "Sign Up"):?>
+        <link href="assets/css/index.css" rel="stylesheet">
+  <?php else:?>
+        <link href="assets/css/style.css" rel="stylesheet">
+  <?php endif;?>
 </head>
 
 </html>

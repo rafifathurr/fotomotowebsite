@@ -2,7 +2,7 @@
 
 require '../function/function.php';
 if(!isset($_SESSION["signin"])){
-   header("Location: login.php");
+   header("Location: signin.php");
    exit;
 }
 
@@ -37,8 +37,10 @@ if(!isset($_SESSION["signin"])){
           <p>Managing for customer booking data</p>
         </div>
         <div style="overflow-x:auto;">
-          <table>
-                <tr>
+          <table id="add-row" class="display table table-striped table-hover dataTable"
+                cellspacing="0" width="100%" role="grid" aria-describedby="add-row_info"
+                style="width: 100%;">
+                <tr role="row">
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Tanggal Booking</th>
@@ -70,6 +72,8 @@ if(!isset($_SESSION["signin"])){
 
   <!-- include footer -->
   <?php include 'partials/footer.php'?>
+  <script src="../dist/table.js"></script>
+  <script src="../dist/datatables.min.js"></script>
 
 </body>
 
