@@ -2,7 +2,7 @@
 
 require '../function/function.php';
 
-if(isset($_SESSION["signin"])){
+if(isset($_SESSION["signinadmin"])){
    header("Location: index.php");
    exit;
 }
@@ -38,7 +38,7 @@ if(isset($_POST["signin"])){
        // cek password
        $row = mysqli_fetch_assoc($result);
        if(password_verify($password, $row["password"])){
-         $_SESSION["signin"] = true;
+         $_SESSION["signinadmin"] = true;
          setcookie('id', $row['id'],time()+60);
             setcookie('key', hash('sha256',$row['username']),time()+60);
          echo "

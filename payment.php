@@ -2,43 +2,43 @@
 require 'function/function.php';
 
 if(!isset($_SESSION["signin"])){
-  header("Location: signin.php");
-  exit;
-}elseif(!isset($_SESSION["category"])){
-  header("Location: services.php");
-}
-
-$category = $_SESSION["category"];
-$price = $_SESSION["price"];
-
-if(isset($_POST["booking"])){
-  if(bookservice($_POST)>0){
-     $_SESSION["booking"] = true;
-     echo "
-           <script type='text/javascript'>
-              setTimeout(function () { 
-                 let timerInterval
-                 Swal.fire({
-                    title: 'Checkout Booking Successfully',
-                    text: 'Please Do Payment!',
-                    icon: 'success',
-                    type: 'success',
-                    showConfirmButton: false
-                })
-                    .then(function () {
-                       window.location = 'payment.php';
-                            });}, 100);
-              </script>";
-  }else{
-    echo "
-    <script type='text/javascript'>
-       setTimeout(function () { Swal.fire('Sign In Failed!', 
-          'Checkout Booking Failed!', 
-          'error')}, 100);
-       </script>
-    ";
-  }
-}
+    header("Location: signin.php");
+    exit;
+ }
+ if(!isset($_SESSION["booking"])){
+    header("Location: home.php");
+    exit;
+ }
+ if(isset($_POST["btn_verif_pay"])){
+ 
+    $gambar = $_FILES["upload_proof"];
+ 
+    if(uploadpayment($_POST)>0){
+    $_SESSION["invoice_id"] = "";
+       echo "
+       <script type='text/javascript'>
+          setTimeout(function () { 
+             let timerInterval
+             Swal.fire({
+                title: 'Payment Successfully',
+                text: 'Please Wait Until We Process Your Booking!',
+                icon: 'success',
+                type: 'success',
+                showConfirmButton: false
+            })
+                .then(function () {
+                   window.location = 'home.php';
+                        });}, 100);
+          </script>";
+    }else{
+        echo "<script type='text/javascript'>
+        setTimeout(function () { Swal.fire('Sign In Failed!', 
+           'Invalid Email or Password!', 
+           'error')}, 100);
+        </script>
+     ";
+    }
+ }
 
 ?>
 <!DOCTYPE html>
@@ -58,26 +58,35 @@ if(isset($_POST["booking"])){
     <div class="container">
 
       <div class="section-titlepage">
-        <h2>Book Now</h2>
+        <h2>Upload Your Payment</h2>
+        <h4>INV/<?=$_SESSION["invoice_id"];?></h4>
       </div>
 
       <div class="row justify-content-center">
         <div class="col-lg-6">
-            <form action="" method="post" role="form">
+            <form action="" method="post" role="form" enctype="multipart/form-data">
                 <!-- <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                   <div class="validate"></div>
                 </div> -->
-                <div class="form-group">
-                  <input type="hidden" name="user_id" value="<?=$_SESSION["key"]?>">
-                  <input type="text" class="form-control" name="book_as" id="book_as" placeholder="Booking As Name" required/>
-                  <div class="validate"></div>
+                <div class="row justify-content-center">
+                    <img src="assets/img/qris.png" alt="">
+                    <img src="assets/img/barcode.jpeg" alt="" width="60%">
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="subject" id="subject" value="<?= $category;?>" placeholder="Subject Services" readonly required/>
+                  <input type="hidden" name="invoice_id" value="<?=$_SESSION['invoice_id'];?>">
+                  <label for="upload">Upload Your Proof Payment</label>
+                  <input type="file" class="form-control" name="upload_proof" id="upload" required/>
+                  <span style="color:red; font-size:12px;">*) Upload Required 100MB size</span>
+                  <br>
+                  <span style="color:red; font-size:12px;">*) Only accept PDF, JPG, JPEG and PNG Extension</span>
                   <div class="validate"></div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
+                  <input type="file" class="form-control" name="upload_proof" placeholder="Subject Services" readonly required/>
+                  <div class="validate"></div>
+                </div> -->
+                <!-- <div class="form-group">
                   <input type="text" class="form-control numeric" name="price" id="price" value="<?= $price;?>" placeholder="Price Service" readonly required/>
                   <div class="validate"></div>
                 </div>
@@ -87,9 +96,9 @@ if(isset($_POST["booking"])){
                 <div class="form-group">
                   <textarea id="additional" class="form-control" name="additional" rows="6" data-rule="required" data-msg="Please write something for us" placeholder="Additional Add"></textarea>
                   <div class="validate"></div>
-                </div>`
+                </div>` -->
                 <div class="btn-wrap">
-                  <button name="booking" class="btn-buy">Book Now</button>
+                  <button name="btn_verif_pay" class="btn-buy">Upload</button>
                 </div>
               </form>
             </div>

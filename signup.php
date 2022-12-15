@@ -2,82 +2,31 @@
 
 require 'function/function.php';
 
-if(isset($_SESSION["signin"])){
-   header("Location: home.php");
-   exit;
-}
+if(isset($_POST["signup"])){
 
-// // cek cookie
-// if(isset($_COOKIE['id'])&&isset($_COOKIE['key'])){
-//    $id = $_COOKIE['id'];
-//    $key = $_COOKIE['key'];
+    $email = $_POST["email"];
+    
 
-//    // Ambil username berdasarkan id
-//    $result = mysqli_query($conn,"SELECT username from admin WHERE id = $id");
-//    $row = mysqli_fetch_assoc($result);
-
-//    // Cek Cookie
-//    if($key === hash('sha256', $row['username'])){
-//        $_SESSION['login'] = true;
-//    }
-// }
-
-if(isset($_POST["signin"])){
-
-   $username = $_POST["username"];
-   $password = $_POST["password"];
-   
-   $query = "SELECT * FROM user 
-               WHERE username = '$username'";
-
-   $result = mysqli_query($conn, $query);
-
-   echo $result;
-
-   // cek username
-   if( mysqli_num_rows($result) === 1){
-
-       // cek password
-       $row = mysqli_fetch_assoc($result);
-       if(password_verify($password, $row["password"])){
-         $_SESSION["signin"] = true;
-         setcookie('id', $row['id'],time()+60);
-            setcookie('key', hash('sha256',$row['username']),time()+60);
-         echo "
-      <script type='text/javascript'>
-         setTimeout(function () { 
-            let timerInterval
-            Swal.fire({
-               title: 'Please Wait!',
-               timer: 1500,
-               didOpen: () => {
-               Swal.showLoading()
-               const b = Swal.getHtmlContainer().querySelector('b')
-               timerInterval = setInterval(() => {
-               b.textContent = Swal.getTimerLeft()
-               }, 1000)
-               },
-               willClose: () => {
-               clearInterval(timerInterval)
-               }
-               }).then((result) => {
-               if (result.dismiss === Swal.DismissReason.timer) {
-                  window.location='index.php';
-               }
-               })}, 100);
-         </script>";
-         
-       }else{
-         $_SESSION["email"] = '';
-         echo "
-         <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Login Failed!', 
-               'Invalid Email or Password!', 
-               'error')}, 100);
-            </script>
-         ";
-       }
-   }
+        if(registrasi($_POST)>0){
+            // $_SESSION["email"] = $email;
+            // $_SESSION["signin"] = true;
+            // $_SESSION["signup"] = true;
+            echo "
+            <script type='text/javascript'>
+               setTimeout(function () { 
+                  let timerInterval
+                  Swal.fire({
+                     title: 'Sign Up Successfully!',
+                     text: '',
+                     icon: 'success',
+                     type: 'success',
+                     showConfirmButton: false
+                 })
+                     .then(function () {
+                        window.location = 'signin.php';
+                             });}, 100);
+               </script>";
+        }
 }
 ?>
 <!DOCTYPE html>
@@ -94,25 +43,25 @@ if(isset($_POST["signin"])){
         </div>
         <div class="textbox">
           <i class="fas fa-user"></i>
-          <input type="text" placeholder="Input Your Username" name="username" />
+          <input type="email" placeholder="Input Your Email" name="email" required/>
         </div>
         <div class="textbox">
           <i class="fas fa-user"></i>
-          <input type="text" placeholder="Input Your Name" name="name" />
+          <input type="text" placeholder="Input Your Name" name="name" required/>
         </div>
         <div class="textbox">
           <i class="fas fa-phone" data-fa-transform="rotate-45"></i>
-          <input type="number" placeholder="Input Your Phone" name="phone" />
+          <input type="text" placeholder="Input Your Phone" name="phone" required/>
         </div>
         <div class="textbox">
           <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Input Your Password" name="password" />
+          <input type="password" placeholder="Input Your Password" name="password" required/>
         </div>
         <div class="textbox">
           <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Repeat Your Password" name="password" />
+          <input type="password" placeholder="Repeat Your Password" name="repassword" required/>
         </div>
-        <button class="btn" name="signin">SIGN IN</button>
+        <button class="btn" name="signup">SIGN UP</button>
         <div class="section-register">
           <p>Have an Account? </p>
           <a href="signin.php">Sign In</a>

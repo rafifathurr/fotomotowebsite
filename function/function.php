@@ -136,7 +136,7 @@ function bookservice($data){
     // number for invoice
     $invoice = rand(0,10000000);
 
-    $email = stripslashes($data["email"]);
+    $booking_as = $data["book_as"];
     $subject = stripslashes($data["subject"]);
     $price = (int)stripslashes($data["price"]);
     $datebook = stripslashes($data["datebook"]);
@@ -145,8 +145,10 @@ function bookservice($data){
     $status = "book";
     
     $insert_ongkir = "INSERT INTO booking VALUES 
-                (0,'$email','$invoice','$subject','$price','$datebook','$additionaladd','$status','$user_id', null, now(),null)";
+                (0,'$booking_as','$invoice','$subject','$price','$datebook','$additionaladd','$status','$user_id', null, now(),null)";
     mysqli_query($conn, $insert_ongkir);
+
+    $_SESSION["invoice_id"] = $invoice;
 
     return mysqli_affected_rows($conn);
 }
@@ -159,7 +161,7 @@ function registrasi($data){
    $fullname = stripslashes($data["name"]);
    $phone = stripslashes($data["phone"]);
    $password = mysqli_real_escape_string($conn, $data["password"]);
-   $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+   $password2 = mysqli_real_escape_string($conn, $data["repassword"]);
 
    // Cek username pada database
    $query_user = "SELECT email FROM user WHERE email = '$email'";
@@ -192,7 +194,7 @@ function registrasi($data){
           let timerInterval
           Swal.fire({
              title: 'Sign Up Fails!',
-             text: 'Password not Match!',
+             text: 'Invalid Credentials!',
              icon: 'error',
              type: 'error',
              showConfirmButton: false
@@ -210,7 +212,7 @@ function registrasi($data){
    // Insert data account
    $query = "INSERT INTO user 
                values 
-               ('','$email','$fullname','$phone','$password')";
+               (0,'$email','$fullname','$phone','$password')";
    mysqli_query($conn, $query);
 
    return mysqli_affected_rows($conn);
@@ -307,7 +309,8 @@ function uploadpayment($data){
     global $conn;
 
     $invoice = (int)stripslashes($data["invoice_id"]);
-    $statusorder = "waiting for confirm";
+    $statusorder = "book";
+    $user_id = (int)$_SESSION["key"];
     
     // Upload gambar
     $gambar = upload($invoice);
@@ -315,9 +318,9 @@ function uploadpayment($data){
         return false;
     }
     
-    $query = "UPDATE cart_payment SET proof_payment 
-                = '$gambar', status_order = '$statusorder', order_date = now()
-                WHERE invoice_id =  '$invoice' and status_order ='wait payment'";
+    $query = "UPDATE booking SET proof_payment 
+                = '$gambar', status_order = 'payed  ', updated_at = now()
+                WHERE invoice_id =  '$invoice' and status_order ='$statusorder' and user_id=$user_id";
         mysqli_query($conn, $query);
 
         return mysqli_affected_rows($conn);
@@ -382,10 +385,10 @@ function delivery($data){
 // upload image
 function upload($invoice){
     
-    $namaFile = $_FILES['upload']['name'];
-    $ukuranFile = $_FILES['upload']['size'];
-    $error = $_FILES['upload']['error'];
-    $tmpName = $_FILES['upload']['tmp_name'];
+    $namaFile = $_FILES['upload_proof']['name'];
+    $ukuranFile = $_FILES['upload_proof']['size'];
+    $error = $_FILES['upload_proof']['error'];
+    $tmpName = $_FILES['upload_proof']['tmp_name'];
 
     // Cek apakah tidak ada gambar yang diupload
     if( $error === 4){ 
@@ -416,11 +419,11 @@ function upload($invoice){
 
     // Upload gambar setelah pengecekan
     // generate nama file baru
-    $namaFileBaru = 'bukti_transfer_'.$invoice;
+    $namaFileBaru = 'proof_payment_'.$invoice;
     $namaFileBaru .= '.';
     $namaFileBaru .= $extensiPict;
 
-    move_uploaded_file($tmpName, 'bukti_transfer/' . $namaFileBaru);
+    move_uploaded_file($tmpName, 'proof_payment/' . $namaFileBaru);
 
     return $namaFileBaru;
 }

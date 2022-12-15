@@ -24,11 +24,11 @@ if(isset($_SESSION["signin"])){
 
 if(isset($_POST["signin"])){
 
-   $username = $_POST["username"];
+   $email = $_POST["email"];
    $password = $_POST["password"];
    
    $query = "SELECT * FROM user 
-               WHERE username = '$username'";
+               WHERE email = '$email'";
 
    $result = mysqli_query($conn, $query);
 
@@ -42,7 +42,7 @@ if(isset($_POST["signin"])){
          $_SESSION["key"] = $row['user_id'];
          $_SESSION["name"] = $row['full_name'];
          setcookie('id', $row['user_id'],time()+60);
-            setcookie('key', hash('sha256',$row['username']),time()+60);
+            setcookie('key', hash('sha256',$row['email']),time()+60);
          echo "
       <script type='text/javascript'>
          setTimeout(function () { 
@@ -72,7 +72,7 @@ if(isset($_POST["signin"])){
          echo "
          <script type='text/javascript'>
             setTimeout(function () { Swal.fire('Sign In Failed!', 
-               'Invalid Email or Password!', 
+               'Invalid Credentials!', 
                'error')}, 100);
             </script>
          ";
@@ -103,7 +103,7 @@ if(isset($_POST["signin"])){
         </div>
         <div class="textbox">
           <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username" name="username" />
+          <input type="email" placeholder="Email" name="email" />
         </div>
         <div class="textbox">
           <i class="fas fa-lock"></i>

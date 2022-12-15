@@ -1,19 +1,47 @@
 <?php
 
 require '../function/function.php';
-if(!isset($_SESSION["signin"])){
+if(!isset($_SESSION["signinadmin"])){
    header("Location: signin.php");
    exit;
 }
 
-// $neworder = query("SELECT cp.invoice_id, cp.order_date, u.full_name as user, s.recipient, 
-// CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, FORMAT(sum(cp.total_price),0) as total_price
-// from cart_payment cp
-// left join user u on u.user_id = cp.user_id
-// left join shipping s on s.invoice_id = cp.invoice_id
-// where cp.status_order = 'waiting for confirm'
-// group by cp.invoice_id
-// order by cp.id DESC");
+$neworder = query("SELECT *
+from booking cp
+join user u on u.user_id = cp.user_id
+where cp.status_order = 'payed'
+order by cp.id DESC");
+
+if(isset($_POST["process"])){
+ 
+  $gambar = $_FILES["upload_proof"];
+
+  if(uploadpayment($_POST)>0){
+  $_SESSION["invoice_id"] = "";
+     echo "
+     <script type='text/javascript'>
+        setTimeout(function () { 
+           let timerInterval
+           Swal.fire({
+              title: 'Payment Successfully',
+              text: 'Please Wait Until We Process Your Booking!',
+              icon: 'success',
+              type: 'success',
+              showConfirmButton: false
+          })
+              .then(function () {
+                 window.location = 'home.php';
+                      });}, 100);
+        </script>";
+  }else{
+      echo "<script type='text/javascript'>
+      setTimeout(function () { Swal.fire('Sign In Failed!', 
+         'Invalid Email or Password!', 
+         'error')}, 100);
+      </script>
+   ";
+  }
+}
 
 ?>
 <!DOCTYPE html>
@@ -41,14 +69,39 @@ if(!isset($_SESSION["signin"])){
                 cellspacing="0" width="100%" role="grid" aria-describedby="add-row_info"
                 style="width: 100%;">
                 <tr role="row">
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Tanggal Booking</th>
-                    <th>Keterangan</th>
-                    <th>Additional</th>
-                    <th>Status</th>
+                    <th>No</th>
+                    <th>Invoice</th>
+                    <th>Name</th>
+                    <th>Booking As</th>
+                    <th>Date Booking</th>
+                    <th>Subject</th>
+                    <th>Price</th>
+                    <th>Action</th>
                 </tr>
-            <tbody></tbody>
+                <?php $i=1;?>
+                <!-- Menampilkan data dari database menggunakan PHP -->
+                <?php foreach($neworder as $new): ?>
+                <tr>
+                    <td><?php echo $i;?></td>
+                    <td>INV/<?=$new["invoice_id"];?></td>
+                    <td><?=$new["full_name"];?></td>
+                    <td><?=$new["booking_as"];?></td>
+                    <td><?=$new["book_date"];?></td>
+                    <td><?=$new["subject"];?></td>
+                    <td style="text-align:right;">Rp. <?=number_format($new["price"],0,',','.');?>,-</td>
+                    <td style="display:flex;">
+                        <form action="" method="post">
+                          <button class="btn-action" style="padding:1px 12px;">
+                            <a style="color:white;" href="detailsorder.php?invoice_id=<?= $new["invoice_id"]; $_SESSION["menu"]="neworder";?>"><i class="fa fa-info" title="Details"></i></a> 
+                          </button>
+                          <button class="btn-action" name="process">
+                            <i class="fa fa-check" title="Process"></i>
+                          </button>
+                        </form>
+                    </td>
+                </tr>
+                <?php $i++;?>
+                <?php endforeach;?>
         </table>
     
         </div>

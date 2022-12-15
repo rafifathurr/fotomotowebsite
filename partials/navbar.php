@@ -42,6 +42,7 @@
         <?php endif;?>
           <li class="drop-down"><a href="#"><span><?=$_SESSION["name"];?></span> <i class="bi bi-chevron-down"></i></a>
             <ul>
+              <li><a href="mycheckout.php">My Checkout</a></li>
               <li><a href="mybooking.php">My Booking</a></li>
               <li><a href="changepass.php">Change Password</a></li>
               <li><a href="signout.php">Sign Out</a></li>

@@ -92,7 +92,17 @@ h6 {
 
 
 /* Desktop Navigation */
-
+.btn-action{
+    background-color:#B6AA56;
+    color:white;
+    border:none;
+    border-radius: 5px;
+}
+.btn-action:hover{
+    background-color:#726c37;
+    color:white;
+    border:none;
+}
 .nav-menu,
 .nav-menu * {
     margin: 0;
