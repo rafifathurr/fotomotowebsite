@@ -8,11 +8,11 @@ if(!isset($_SESSION["signin"])){
 
 $user_id = $_SESSION['key'];
 
-$neworder = query("SELECT *
+$neworder = query('SELECT *
 from booking cp
 join user u on u.user_id = cp.user_id
-where cp.status_order != 'book' and cp.status_order != 'Cancel' and cp.user_id = '.$user_id.'
-order by cp.id DESC");
+where cp.status_order != "book" and cp.status_order != "Cancel" and cp.user_id = '.$user_id.'
+order by cp.id DESC');
 
 if(isset($_POST['filter'])){
   $status = $_POST['status'];
