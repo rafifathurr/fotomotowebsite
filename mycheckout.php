@@ -6,10 +6,12 @@ if(!isset($_SESSION["signin"])){
   exit;
 }
 
+$user_id = $_SESSION['key'];
+
 $neworder = query("SELECT *
 from booking cp
 join user u on u.user_id = cp.user_id
-where cp.status_order = 'book'
+where cp.status_order = 'book' and cp.user_id = '.$user_id.'
 order by cp.id DESC");
 
 if(isset($_POST['cancel'])){

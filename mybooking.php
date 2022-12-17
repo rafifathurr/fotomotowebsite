@@ -6,25 +6,28 @@ if(!isset($_SESSION["signin"])){
   exit;
 }
 
+$user_id = $_SESSION['key'];
+
 $neworder = query("SELECT *
 from booking cp
 join user u on u.user_id = cp.user_id
-where cp.status_order != 'book' and cp.status_order != 'Cancel' 
+where cp.status_order != 'book' and cp.status_order != 'Cancel' and cp.user_id = '.$user_id.'
 order by cp.id DESC");
 
 if(isset($_POST['filter'])){
   $status = $_POST['status'];
+  $user_id = $_SESSION['key'];
   if($status==""){
-    $neworder =  query("SELECT *
+    $neworder =  query('SELECT *
     from booking cp
     join user u on u.user_id = cp.user_id
-    where cp.status_order != 'book' and cp.status_order != 'Cancel' 
-    order by cp.id DESC");
+    where cp.status_order != "book" and cp.status_order != "Cancel" and cp.user_id = '.$user_id.'
+    order by cp.id DESC');
   }else{
     $neworder = query("SELECT *
     from booking cp
     join user u on u.user_id = cp.user_id
-    where cp.status_order = '$status'
+    where cp.status_order = '$status' and cp.user_id = '.$user_id.'
     order by cp.id DESC");
   }
 }
