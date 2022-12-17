@@ -70,7 +70,7 @@ if(isset($_POST["signin"])){
          echo "
          <script type='text/javascript'>
             setTimeout(function () { Swal.fire('Sign In Failed!', 
-               'Invalid Email or Password!', 
+               'Invalid Credentials!', 
                'error')}, 100);
             </script>
          ";
@@ -80,7 +80,7 @@ if(isset($_POST["signin"])){
     echo "
     <script type='text/javascript'>
        setTimeout(function () { Swal.fire('Sign In Failed!', 
-          'Invalid Email or Password!', 
+          'Invalid Credentials!', 
           'error')}, 100);
        </script>
     ";

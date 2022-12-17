@@ -77,9 +77,9 @@ if(!isset($_SESSION["signin"])){
                   <input type="hidden" name="invoice_id" value="<?=$_SESSION['invoice_id'];?>">
                   <label for="upload">Upload Your Proof Payment</label>
                   <input type="file" class="form-control" name="upload_proof" id="upload" required/>
-                  <span style="color:red; font-size:12px;">*) Upload Required 100MB size</span>
+                  <span style="color:red; font-size:12px;">*) Upload Required 20MB size</span>
                   <br>
-                  <span style="color:red; font-size:12px;">*) Only accept PDF, JPG, JPEG and PNG Extension</span>
+                  <span style="color:red; font-size:12px;">*) Only accept JPG, JPEG and PNG Extension</span>
                   <div class="validate"></div>
                 </div>
                 <!-- <div class="form-group">

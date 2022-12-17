@@ -40,6 +40,34 @@ if(isset($_POST["process"])){
   }
 }
 
+if(isset($_POST["finish"])){
+ 
+  if(done($_POST)>0){
+     echo "
+     <script type='text/javascript'>
+        setTimeout(function () { 
+           let timerInterval
+           Swal.fire({
+              title: 'Finishing Booking Successfully!',
+              text: '',
+              icon: 'success',
+              type: 'success',
+              showConfirmButton: false
+          })
+              .then(function () {
+                 window.location = 'index.php';
+                      });}, 100);
+        </script>";
+  }else{
+      echo "<script type='text/javascript'>
+      setTimeout(function () { Swal.fire('Finishing Booking Failed!', 
+         '', 
+         'error')}, 100);
+      </script>
+   ";
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,15 +117,15 @@ if(isset($_POST["process"])){
                     <td style="text-align:right;">Rp. <?=number_format($new["price"],0,',','.');?>,-</td>
                     <td>
                       <?php if($new["status_order"]=="Payed"):?>
-                        <div style="background-color:yellow;text-align:center;border-radius:5px;">
+                        <div style="padding:3px 8px;background-color:yellow;text-align:center;border-radius:5px;">
                         <?=$new["status_order"];?>
                         </div>
-                      <?php elseif($new["status_order"]=="Process"):?>
-                        <div style="background-color:green;color:white;text-align:center;border-radius:5px;">
+                      <?php elseif($new["status_order"]=="Process" || $new["status_order"]=="Done"):?>
+                        <div style="padding:3px 8px;background-color:green;color:white;text-align:center;border-radius:5px;">
                         <?=$new["status_order"];?>
                         </div>
                       <?php else:?>
-                        <div style="background-color:red;color:white;text-align:center;border-radius:5px;">
+                        <div style="padding:3px 8px;background-color:red;color:white;text-align:center;border-radius:5px;">
                         <?=$new["status_order"];?>
                         </div>
                       <?php endif;?>
@@ -116,6 +144,14 @@ if(isset($_POST["process"])){
                             <i class="fa fa-check" title="Process"></i>
                           </button>
                         </form>
+                    <?php elseif($new["status_order"]=="Process"):?>
+                      <form action="" method="post">
+                        <input type="hidden" name="invoice" value="<?=$new["invoice_id"]?>" >
+                        <a class="btn-action" style="padding:5px 12px;color:white;" href="detail.php?invoice_id=<?= $new["invoice_id"];?>"><i class="fa fa-info" title="Details"></i></a> 
+                        <button class="btn-action" name="finish" style="padding:3px 7px;">
+                            <i class="fa fa-check" title="Done"></i>
+                          </button>
+                      </form>
                     <?php else:?>
                       <form action="" method="post">
                         <a class="btn-action" style="padding:5px 12px;color:white;" href="detail.php?invoice_id=<?= $new["invoice_id"];?>"><i class="fa fa-info" title="Details"></i></a> 

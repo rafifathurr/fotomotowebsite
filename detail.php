@@ -91,10 +91,22 @@ $orders = query('SELECT *
                   </a>
                 </div>
                 <?php if($order['status_order']=='Reject'):?>
-                  <div class="form-group">
-                    <label for="">Reason Rejected</label>
-                    <textarea id="additional" class="form-control" name="additional" rows="6" data-rule="required" data-msg="Please write something for us" placeholder="Additional Add" readonly><?=$order['reason'];?></textarea>
-                    <div class="validate"></div>
+                  <div style="border-style: solid;border-color: coral;border-radius:5px;padding:20px">
+                    <h5 style="text-align:center;color:red !important;"> <b>REJECT NOTE</b> </h5>
+                    <div class="form-group">
+                      <label for="">Reason Rejected</label>
+                      <textarea id="additional" class="form-control" name="additional" rows="6" data-rule="required" data-msg="Please write something for us" placeholder="Additional Add" readonly><?=$order['reason'];?></textarea>
+                      <div class="validate"></div>
+                    </div>
+                    <div class="form-group">
+                    <label for="">Proof Refund</label>
+                    <br>
+                    <div>
+                      <a href="proof_refund/<?=$order['refund'];?>" style="color:#007bff !important" target="blank">
+                      <i><?=$order['refund']?></i>
+                    </div>
+                    </a>
+                  </div>
                   </div>
                 <?php elseif($order['status_order']=='Process'):?>
                   <br>

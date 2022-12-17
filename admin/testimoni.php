@@ -65,6 +65,7 @@ order by cp.id DESC");
                 style="width: 100%;">
                 <tr role="row">
                     <th>No</th>
+                    <th>User</th>
                     <th>Type</th>
                     <th>Testimoni</th>
                 </tr>
@@ -73,6 +74,7 @@ order by cp.id DESC");
                 <?php foreach($testimoni as $testi): ?>
                 <tr>
                     <td><?php echo $i;?></td>
+                    <td><?=$testi["full_name"];?></td>
                     <?php if($testi["type"]==1):?>
                       <td>Happy</td>
                     <?php else:?>

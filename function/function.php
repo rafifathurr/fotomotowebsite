@@ -31,6 +31,21 @@ function approval($data){
 
 }
 
+// done for booking
+function done($data){
+    global $conn;
+
+    $statusorder = "Done";
+    $invoice = (int)stripslashes($data["invoice"]);
+    
+    $query = "UPDATE booking SET 
+                status_order = '$statusorder' WHERE invoice_id = $invoice and status_order ='Process'";
+        mysqli_query($conn, $query);
+
+        return mysqli_affected_rows($conn);
+
+}
+
 // create booking service
 function bookservice($data){
     global $conn;
@@ -138,7 +153,7 @@ function registrasi($data){
    return mysqli_affected_rows($conn);
 }
 
-// forgot pass
+// verification from login
 function forgot($data){
     global $conn;
 
@@ -157,6 +172,7 @@ function forgot($data){
 }
 }
 
+// set password from user side 
 function setpass($data){
     global $conn;
 
@@ -188,6 +204,7 @@ function setpass($data){
     return mysqli_affected_rows($conn);
 }
 
+// set password from login
 function setpassbyid($data){
     global $conn;
 
@@ -250,8 +267,14 @@ function reject($data){
     $reason = stripslashes($data["reason"]);
     $statusorder = "Reject";
 
+    // Upload gambar
+    $gambar = uploadreject($invoice);
+    if(!$gambar){
+        return false;
+    }
+
     $query_2 = "INSERT INTO reject VALUES 
-                (0,'$invoice','$reason')";
+                (0,'$invoice','$reason','$gambar')";
         mysqli_query($conn, $query_2);
     
     $query = "UPDATE booking SET status_order = '$statusorder'
@@ -319,6 +342,52 @@ function upload($invoice){
     $namaFileBaru .= $extensiPict;
 
     move_uploaded_file($tmpName, 'proof_payment/' . $namaFileBaru);
+
+    return $namaFileBaru;
+}
+
+// upload image
+function uploadreject($invoice){
+    
+    $namaFile = $_FILES['refund']['name'];
+    $ukuranFile = $_FILES['refund']['size'];
+    $error = $_FILES['refund']['error'];
+    $tmpName = $_FILES['refund']['tmp_name'];
+
+    // Cek apakah tidak ada gambar yang diupload
+    if( $error === 4){ 
+        echo "<script>
+                alert('Please Upload!')
+                </script>";
+        return false;        
+    }
+
+    // Cek apakah yang diupload adalah gambar
+    $extensionGambar = ['jpg', 'jpeg', 'png'];
+    $extensiPict = explode('.', $namaFile);
+    $extensiPict = strtolower(end($extensiPict));
+    if( !in_array($extensiPict,$extensionGambar)){
+        echo "<script>
+                alert('Choose image only!')
+                </script>";
+        return false;  
+    }
+
+    // cek jika ukurannya terlalu besar
+    if($ukuranFile > 20000000){
+        echo "<script>
+                alert('Size Image Min 20 MB !')
+                </script>";
+        return false; 
+    }
+
+    // Upload gambar setelah pengecekan
+    // generate nama file baru
+    $namaFileBaru = 'refund_payment_'.$invoice;
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $extensiPict;
+
+    move_uploaded_file($tmpName, '../proof_refund/' . $namaFileBaru);
 
     return $namaFileBaru;
 }

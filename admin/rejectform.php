@@ -61,7 +61,7 @@ if(isset($_POST['reject'])){
 
       <div class="row justify-content-center">
         <div class="col-lg-6">
-            <form action="" method="post" role="form">
+            <form action="" method="post" role="form" enctype="multipart/form-data">
             <?php foreach ($orders as $order):?>
               <input type="hidden" name="invoice" value="<?=$order['invoice_id']?>">
                 <div class="form-group">
@@ -117,6 +117,14 @@ if(isset($_POST['reject'])){
                   <div class="form-group">
                     <label for="">Reason Rejected</label>
                     <textarea id="additional" class="form-control" name="reason" rows="6" data-rule="required" data-msg="Please write reason rejected booking!" placeholder="Please write reason rejected booking" required></textarea>
+                    <div class="validate"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="upload">Upload Proof Refund</label>
+                    <input type="file" class="form-control" name="refund" id="refund" required/>
+                    <span style="color:red; font-size:12px;">*) Upload Required 20MB size</span>
+                    <br>
+                    <span style="color:red; font-size:12px;">*) Only accept JPG, JPEG and PNG Extension</span>
                     <div class="validate"></div>
                   </div>
                   <div class="btn-wrap">

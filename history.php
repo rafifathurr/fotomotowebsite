@@ -59,6 +59,7 @@ if(isset($_POST['filter'])){
                      <option selected="true" value="" disabled="disabled">- Choose Status -</option>  
                      <option value="">All</option> 
                      <option value="Payed">Waiting for Process</option>
+                     <option value="Done">Done</option>
                      <option value="Process">Process</option>
                      <option value="Reject">Reject</option>
                      <option value="Cancel">Cancel</option>
@@ -95,7 +96,7 @@ if(isset($_POST['filter'])){
                         <div style="background-color:yellow;text-align:center;border-radius:5px;">
                         Waiting for process
                         </div>
-                      <?php elseif($new["status_order"]=="Process"):?>
+                      <?php elseif($new["status_order"]=="Process" || $new["status_order"]=="Done"):?>
                         <div style="background-color:green;color:white;text-align:center;border-radius:5px;">
                         <?=$new["status_order"];?>
                         </div>

@@ -11,7 +11,7 @@ $user_id = $_SESSION['key'];
 $neworder = query("SELECT *
 from booking cp
 join user u on u.user_id = cp.user_id
-where cp.status_order != 'book' and cp.status_order != 'Cancel' and cp.user_id = '$user_id'
+where cp.status_order != 'book' and cp.status_order != 'Cancel' and cp.status_order != 'Done' and cp.user_id = '$user_id'
 order by cp.id DESC");
 
 if(isset($_POST['filter'])){
@@ -21,7 +21,7 @@ if(isset($_POST['filter'])){
     $neworder =  query("SELECT *
     from booking cp
     join user u on u.user_id = cp.user_id
-    where cp.status_order != 'book' and cp.status_order != 'Cancel' and cp.user_id = '$user_id'
+    where cp.status_order != 'book' and cp.status_order != 'Cancel' and cp.status_order != 'Done' and cp.user_id = '$user_id'
     order by cp.id DESC");
   }else{
     $neworder = query("SELECT *
