@@ -96,6 +96,15 @@ $orders = query('SELECT *
                     <textarea id="additional" class="form-control" name="additional" rows="6" data-rule="required" data-msg="Please write something for us" placeholder="Additional Add" readonly><?=$order['reason'];?></textarea>
                     <div class="validate"></div>
                   </div>
+                  <div class="form-group">
+                    <label for="">Proof Refund</label>
+                    <br>
+                    <div>
+                      <a href="../proof_refund/<?=$order['refund'];?>" style="color:#007bff !important" target="blank">
+                      <i><?=$order['refund']?></i>
+                    </div>
+                    </a>
+                  </div>
                 <?php endif;?>
               <?php endforeach;?>
               </form>
