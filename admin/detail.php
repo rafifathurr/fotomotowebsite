@@ -20,7 +20,7 @@ $orders = query('SELECT *
 <html lang="en">
 
 <!-- ====== Include head ======  -->
-<?php $currentPage = "Book Service"; ?>
+<?php $currentPage = "Detail Booking"; ?>
 <?php include 'partials/head.php'?>
 
 <body>
