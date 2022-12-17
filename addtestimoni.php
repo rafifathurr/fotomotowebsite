@@ -4,36 +4,30 @@ require 'function/function.php';
 if(!isset($_SESSION["signin"])){
   header("Location: signin.php");
   exit;
-}elseif(!isset($_SESSION["category"])){
-  header("Location: services.php");
 }
 
-$category = $_SESSION["category"];
-$price = $_SESSION["price"];
-
-if(isset($_POST["booking"])){
-  if(bookservice($_POST)>0){
-     $_SESSION["booking"] = true;
+if(isset($_POST["add"])){
+  if(testimoni($_POST)>0){
      echo "
            <script type='text/javascript'>
               setTimeout(function () { 
                  let timerInterval
                  Swal.fire({
-                    title: 'Checkout Booking Successfully',
-                    text: 'Please Do Payment!',
+                    title: 'Testimoni Successfully',
+                    text: 'Thank You For Trusted Us!',
                     icon: 'success',
                     type: 'success',
                     showConfirmButton: false
                 })
                     .then(function () {
-                       window.location = 'payment.php';
+                       window.location = 'home.php';
                             });}, 100);
               </script>";
   }else{
     echo "
     <script type='text/javascript'>
-       setTimeout(function () { Swal.fire('Checkout Booking Failed!', 
-          '!', 
+       setTimeout(function () { Swal.fire('Testimoni Failed!', 
+          '', 
           'error')}, 100);
        </script>
     ";
@@ -45,7 +39,7 @@ if(isset($_POST["booking"])){
 <html lang="en">
 
 <!-- ====== Include head ======  -->
-<?php $currentPage = "Book Service"; ?>
+<?php $currentPage = "Add Testimoni"; ?>
 <?php include 'partials/head.php'?>
 
 <body>
@@ -58,7 +52,7 @@ if(isset($_POST["booking"])){
     <div class="container">
 
       <div class="section-titlepage">
-        <h2>Book Now</h2>
+        <h2>Add Testimoni</h2>
       </div>
 
       <div class="row justify-content-center">
@@ -70,26 +64,19 @@ if(isset($_POST["booking"])){
                 </div> -->
                 <div class="form-group">
                   <input type="hidden" name="user_id" value="<?=$_SESSION["key"]?>">
-                  <input type="text" class="form-control" name="book_as" id="book_as" placeholder="Booking As Name" required/>
+                    <select class="form-control" id="type" name="type" required>
+                      <option value="" style="display: none;">- Select Type -</option>
+                      <option value="1">Happy</option>
+                      <option value="2">Unhappy</option>
+                    </select>
                   <div class="validate"></div>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="subject" id="subject" value="<?= $category;?>" placeholder="Subject Services" readonly required/>
-                  <div class="validate"></div>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control numeric" name="price" id="price" value="<?= $price;?>" placeholder="Price Service" readonly required/>
-                  <div class="validate"></div>
-                </div>
-                <div class="form-group">
-                  <input type="date" class="form-control" id="datebook" name="datebook" placeholder="Date for booking" required/>
-                </div>
-                <div class="form-group">
-                  <textarea id="additional" class="form-control" name="additional" rows="6" data-rule="required" data-msg="Please write something for us" placeholder="Additional Add"></textarea>
+                  <textarea id="testimoni" class="form-control" name="testimoni" rows="6" data-rule="required" data-msg="Please write something for us" placeholder="Please write something for us"></textarea>
                   <div class="validate"></div>
                 </div>`
                 <div class="btn-wrap">
-                  <button name="booking" class="btn-buy">Book Now</button>
+                  <button name="add" class="btn-buy">Add</button>
                 </div>
               </form>
             </div>

@@ -9,34 +9,31 @@ if(!isset($_SESSION["signinadmin"])){
 $neworder = query("SELECT *
 from booking cp
 join user u on u.user_id = cp.user_id
-where cp.status_order = 'payed'
-order by cp.id DESC");
+where cp.status_order != 'book' and cp.status_order != 'cancel'
+order by cp.updated_at DESC");
 
 if(isset($_POST["process"])){
  
-  $gambar = $_FILES["upload_proof"];
-
-  if(uploadpayment($_POST)>0){
-  $_SESSION["invoice_id"] = "";
+  if(approval($_POST)>0){
      echo "
      <script type='text/javascript'>
         setTimeout(function () { 
            let timerInterval
            Swal.fire({
-              title: 'Payment Successfully',
-              text: 'Please Wait Until We Process Your Booking!',
+              title: 'Process Successfully!',
+              text: '',
               icon: 'success',
               type: 'success',
               showConfirmButton: false
           })
               .then(function () {
-                 window.location = 'home.php';
+                 window.location = 'index.php';
                       });}, 100);
         </script>";
   }else{
       echo "<script type='text/javascript'>
-      setTimeout(function () { Swal.fire('Sign In Failed!', 
-         'Invalid Email or Password!', 
+      setTimeout(function () { Swal.fire('Process Failed!', 
+         '', 
          'error')}, 100);
       </script>
    ";
@@ -76,6 +73,7 @@ if(isset($_POST["process"])){
                     <th>Date Booking</th>
                     <th>Subject</th>
                     <th>Price</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 <?php $i=1;?>
@@ -89,15 +87,40 @@ if(isset($_POST["process"])){
                     <td><?=$new["book_date"];?></td>
                     <td><?=$new["subject"];?></td>
                     <td style="text-align:right;">Rp. <?=number_format($new["price"],0,',','.');?>,-</td>
+                    <td>
+                      <?php if($new["status_order"]=="Payed"):?>
+                        <div style="background-color:yellow;text-align:center;border-radius:5px;">
+                        <?=$new["status_order"];?>
+                        </div>
+                      <?php elseif($new["status_order"]=="Process"):?>
+                        <div style="background-color:green;color:white;text-align:center;border-radius:5px;">
+                        <?=$new["status_order"];?>
+                        </div>
+                      <?php else:?>
+                        <div style="background-color:red;color:white;text-align:center;border-radius:5px;">
+                        <?=$new["status_order"];?>
+                        </div>
+                      <?php endif;?>
+                    </td>
                     <td style="display:flex;">
+                    <?php if($new["status_order"]=="Payed"):?>
                         <form action="" method="post">
-                          <button class="btn-action" style="padding:1px 12px;">
-                            <a style="color:white;" href="detailsorder.php?invoice_id=<?= $new["invoice_id"]; $_SESSION["menu"]="neworder";?>"><i class="fa fa-info" title="Details"></i></a> 
-                          </button>
-                          <button class="btn-action" name="process">
+                          <input type="hidden" name="invoice" value="<?=$new["invoice_id"]?>" >
+                          <a class="btn-action" style="padding:5px 12px;color:white;margin-right:5px;" href="detail.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Detail">
+                            <i class="fa fa-info" title="Details"></i>
+                          </a> 
+                          <a class="btn-action" style="padding:5px 8px;margin-right:5px;" href="rejectform.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Reject">
+                            <i class="fa fa-close"></i>
+                          </a>
+                          <button class="btn-action" name="process" style="padding:3px 7px;">
                             <i class="fa fa-check" title="Process"></i>
                           </button>
                         </form>
+                    <?php else:?>
+                      <form action="" method="post">
+                        <a class="btn-action" style="padding:5px 12px;color:white;" href="detail.php?invoice_id=<?= $new["invoice_id"];?>"><i class="fa fa-info" title="Details"></i></a> 
+                      </form>
+                    <?php endif;?>
                     </td>
                 </tr>
                 <?php $i++;?>

@@ -9,32 +9,24 @@ if(!isset($_SESSION["signin"])){
 $neworder = query("SELECT *
 from booking cp
 join user u on u.user_id = cp.user_id
-where cp.status_order = 'book'
+where cp.status_order != 'book' and cp.status_order != 'Cancel' 
 order by cp.id DESC");
 
-if(isset($_POST['cancel'])){
-  if(cancel($_POST)>0){
-    echo "
-    <script type='text/javascript'>
-       setTimeout(function () { 
-          let timerInterval
-          Swal.fire({
-             title: 'Booking Succesfully Cancelled!',
-             text: '',
-             icon: 'success',
-             type: 'success',
-             showConfirmButton: false
-         })
-             .then(function () {
-                window.location = 'home.php';
-                     });}, 100);
-       </script>";
- }
-}elseif(isset($_POST['pay'])){
-  $_SESSION["booking"] = true;
-  $_SESSION["invoice_id"] = $_POST['invoice'];
-  header('Location: payment.php');
-  exit;
+if(isset($_POST['filter'])){
+  $status = $_POST['status'];
+  if($status==""){
+    $neworder =  query("SELECT *
+    from booking cp
+    join user u on u.user_id = cp.user_id
+    where cp.status_order != 'book' and cp.status_order != 'Cancel' 
+    order by cp.id DESC");
+  }else{
+    $neworder = query("SELECT *
+    from booking cp
+    join user u on u.user_id = cp.user_id
+    where cp.status_order = '$status'
+    order by cp.id DESC");
+  }
 }
 
 ?>
@@ -42,7 +34,7 @@ if(isset($_POST['cancel'])){
 <html lang="en">
 
 <!-- ====== Include head ======  -->
-<?php $currentPage = "My Checkout"; ?>
+<?php $currentPage = "My Booking"; ?>
 <?php include 'partials/head.php'?>
 
 <body>
@@ -55,8 +47,21 @@ if(isset($_POST['cancel'])){
     <div class="container">
 
     <div class="section-titlepage">
-          <h2>My Check Out</h2>
+          <h2>My Booking</h2>
         </div>
+        <div class="btn-tambah" style="margin-bottom:20px;">
+                  <input type="hidden" value="<?=$id?>" id="id" name="id">
+               <form action="mybooking.php" method="post">
+                 <select id="status" name="status" style="text-align:center;">
+                     <option selected="true" value="" disabled="disabled">- Choose Status -</option>  
+                     <option value="">All</option> 
+                     <option value="Payed">Waiting for Process</option>
+                     <option value="Process">Process</option>
+                     <option value="Reject">Reject</option>
+                  </select> 
+                  <button class="btn-action" name="filter">FILTER</button>
+               </form>
+            </div>
         <div style="overflow-x:auto;">
           <table id="add-row" class="display table table-striped table-hover dataTable"
                 cellspacing="0" width="100%" role="grid" aria-describedby="add-row_info"
@@ -68,6 +73,7 @@ if(isset($_POST['cancel'])){
                     <th>Date Booking</th>
                     <th>Subject</th>
                     <th>Price</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 <?php $i=1;?>
@@ -80,18 +86,27 @@ if(isset($_POST['cancel'])){
                     <td><?=$new["book_date"];?></td>
                     <td><?=$new["subject"];?></td>
                     <td style="text-align:right;">Rp. <?=number_format($new["price"],0,',','.');?>,-</td>
+                    <td>
+                      <?php if($new["status_order"]=="Payed"):?>
+                        <div style="background-color:yellow;text-align:center;border-radius:5px;">
+                        Waiting for Process
+                        </div>
+                      <?php elseif($new["status_order"]=="Process"):?>
+                        <div style="background-color:green;color:white;text-align:center;border-radius:5px;">
+                        <?=$new["status_order"];?>
+                        </div>
+                      <?php else:?>
+                        <div style="background-color:red;color:white;text-align:center;border-radius:5px;">
+                        <?=$new["status_order"];?>
+                        </div>
+                      <?php endif;?>
+                    </td>
                     <td style="display:flex;">
                         <form action="" method="post">
                           <input type="hidden" name="invoice" value="<?=$new["invoice_id"]?>" >
-                          <button class="btn-action" style="background-color:green;padding:1px 12px;color:white;margin-right:5px;" name="pay">
-                            Pay
-                          </button>
-                          <button class="btn-action" style="background-color:red;padding:1px 10px;color:white;" name="cancel">
-                            Cancel
-                          </button>
-                          <!-- <a class="btn-action" style="background-color:green;padding:5px 12px;color:white;margin-right:5px;" href="detail.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Detail">
-                            Pay
-                          </a>  -->
+                          <a class="btn-action" style="padding:5px 12px;color:white;margin-right:5px;" href="detail.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Detail">
+                            Detail
+                          </a> 
                         </form>
                     </td>
                 </tr>

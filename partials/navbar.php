@@ -44,7 +44,9 @@
             <ul>
               <li><a href="mycheckout.php">My Checkout</a></li>
               <li><a href="mybooking.php">My Booking</a></li>
-              <li><a href="changepass.php">Change Password</a></li>
+              <li><a href="history.php">History Booking</a></li>
+              <li><a href="mytestimoni.php">My Testimoni</a></li>
+              <li><a href="changepassword.php">Change Password</a></li>
               <li><a href="signout.php">Sign Out</a></li>
             </ul>
           </li>

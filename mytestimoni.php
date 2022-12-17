@@ -6,43 +6,43 @@ if(!isset($_SESSION["signin"])){
   exit;
 }
 
-$neworder = query("SELECT *
-from booking cp
+$testimoni = query("SELECT *
+from testimoni cp
 join user u on u.user_id = cp.user_id
-where cp.status_order = 'book'
+where cp.user_id = ".$_SESSION['key']."
 order by cp.id DESC");
 
-if(isset($_POST['cancel'])){
-  if(cancel($_POST)>0){
-    echo "
-    <script type='text/javascript'>
-       setTimeout(function () { 
-          let timerInterval
-          Swal.fire({
-             title: 'Booking Succesfully Cancelled!',
-             text: '',
-             icon: 'success',
-             type: 'success',
-             showConfirmButton: false
-         })
-             .then(function () {
-                window.location = 'home.php';
-                     });}, 100);
-       </script>";
- }
-}elseif(isset($_POST['pay'])){
-  $_SESSION["booking"] = true;
-  $_SESSION["invoice_id"] = $_POST['invoice'];
-  header('Location: payment.php');
-  exit;
-}
+// if(isset($_POST['cancel'])){
+//   if(cancel($_POST)>0){
+//     echo "
+//     <script type='text/javascript'>
+//        setTimeout(function () { 
+//           let timerInterval
+//           Swal.fire({
+//              title: 'Booking Succesfully Cancelled!',
+//              text: '',
+//              icon: 'success',
+//              type: 'success',
+//              showConfirmButton: false
+//          })
+//              .then(function () {
+//                 window.location = 'index.php';
+//                      });}, 100);
+//        </script>";
+//  }
+// }elseif(isset($_POST['pay'])){
+//   $_SESSION["booking"] = true;
+//   $_SESSION["invoice_id"] = $_POST['invoice'];
+//   header('Location: payment.php');
+//   exit;
+// }
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <!-- ====== Include head ======  -->
-<?php $currentPage = "My Checkout"; ?>
+<?php $currentPage = "My Testimoni"; ?>
 <?php include 'partials/head.php'?>
 
 <body>
@@ -54,8 +54,11 @@ if(isset($_POST['cancel'])){
     <section id="contact" class="pricing">
     <div class="container">
 
-    <div class="section-titlepage">
-          <h2>My Check Out</h2>
+        <div class="section-titlepage">
+          <h2>My Testimoni</h2>
+        </div>
+        <div style="margin-bottom:50px;">
+          <a class="btn-action" style="padding:10px;" href="addtestimoni.php">Add Testimoni</a>
         </div>
         <div style="overflow-x:auto;">
           <table id="add-row" class="display table table-striped table-hover dataTable"
@@ -63,37 +66,20 @@ if(isset($_POST['cancel'])){
                 style="width: 100%;">
                 <tr role="row">
                     <th>No</th>
-                    <th>Invoice</th>
-                    <th>Booking As</th>
-                    <th>Date Booking</th>
-                    <th>Subject</th>
-                    <th>Price</th>
-                    <th>Action</th>
+                    <th>Type</th>
+                    <th>Testimoni</th>
                 </tr>
                 <?php $i=1;?>
                 <!-- Menampilkan data dari database menggunakan PHP -->
-                <?php foreach($neworder as $new): ?>
+                <?php foreach($testimoni as $testi): ?>
                 <tr>
                     <td><?php echo $i;?></td>
-                    <td>INV/<?=$new["invoice_id"];?></td>
-                    <td><?=$new["booking_as"];?></td>
-                    <td><?=$new["book_date"];?></td>
-                    <td><?=$new["subject"];?></td>
-                    <td style="text-align:right;">Rp. <?=number_format($new["price"],0,',','.');?>,-</td>
-                    <td style="display:flex;">
-                        <form action="" method="post">
-                          <input type="hidden" name="invoice" value="<?=$new["invoice_id"]?>" >
-                          <button class="btn-action" style="background-color:green;padding:1px 12px;color:white;margin-right:5px;" name="pay">
-                            Pay
-                          </button>
-                          <button class="btn-action" style="background-color:red;padding:1px 10px;color:white;" name="cancel">
-                            Cancel
-                          </button>
-                          <!-- <a class="btn-action" style="background-color:green;padding:5px 12px;color:white;margin-right:5px;" href="detail.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Detail">
-                            Pay
-                          </a>  -->
-                        </form>
-                    </td>
+                    <?php if($testi["type"]==1):?>
+                      <td>Happy</td>
+                    <?php else:?>
+                      <td>Unhappy</td>
+                    <?php endif;?>
+                    <td><?=$testi["testimoni"];?></td>
                 </tr>
                 <?php $i++;?>
                 <?php endforeach;?>
@@ -101,7 +87,6 @@ if(isset($_POST['cancel'])){
       
     </div>
   </section>
-
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->

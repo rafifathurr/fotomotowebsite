@@ -9,6 +9,28 @@ require 'function/function.php';
 <!-- ====== Include head ======  -->
 <?php $currentPage = "Home"; ?>
 <?php include 'partials/head.php'?>
+<?php 
+
+$testimoni = query("SELECT *
+from testimoni cp
+join user u on u.user_id = cp.user_id
+where cp.type = 1
+order by cp.id asc");
+
+$year = query("SELECT YEAR(cp.book_date)
+from booking cp
+where YEAR(cp.book_date) = YEAR(now())
+GROUP BY (YEAR(cp.book_date))");
+
+$all = query("SELECT *
+from booking
+where booking.status_order !='Cancel' and booking.status_order !='Reject' and booking.status_order !='book'");
+
+$total_happy = count($testimoni);
+$total_year = count($year);
+$total_project = count($all);
+
+?>
 
 <body>
 
@@ -42,7 +64,7 @@ require 'function/function.php';
                 <div class="col-md-6 mt-5 d-md-flex justify-content-center">
                   <div class="count-box">
                     <i class="icofont-simple-smile" style="color: #B6AA56;"></i>
-                    <span data-toggle="counter-up">20</span>
+                    <span data-toggle="counter-up"><?=$total_happy?></span>
                     <p><strong>Happy Clients</strong> with our services.</p>
                   </div>
                 </div>
@@ -50,7 +72,7 @@ require 'function/function.php';
                 <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
                   <div class="count-box">
                     <i class="icofont-document-folder" style="color: #B6AA56;"></i>
-                    <span data-toggle="counter-up">10</span>
+                    <span data-toggle="counter-up"><?=$total_project?></span>
                     <p><strong>Projects</strong> about photography, videography and film maker.</p>
                   </div>
                 </div>
@@ -58,18 +80,18 @@ require 'function/function.php';
                 <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
                   <div class="count-box">
                     <i class="icofont-clock-time" style="color: #B6AA56;"></i>
-                    <span data-toggle="counter-up">3</span>
+                    <span data-toggle="counter-up"><?=$total_year?></span>
                     <p><strong>Years of experience</strong> about professional photography.</p>
                   </div>
                 </div>
 
-                <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
+                <!-- <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
                   <div class="count-box">
                     <i class="icofont-award" style="color: #B6AA56;"></i>
                     <span data-toggle="counter-up">2</span>
                     <p><strong>Awards</strong> of the best photography and videography in our country.</p>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div><!-- End .content-->
 
@@ -164,29 +186,16 @@ require 'function/function.php';
       <div class="container">
 
         <div class="owl-carousel testimonials-carousel">
-
+        <?php foreach($testimoni as $testi):?>
           <div class="testimonial-item">
-            <img src="assets/img/rudysalim.jpg" class="testimonial-img" alt="">
-            <h3>Rudy Salim</h3>
-            <h4>Ceo &amp; Founder Prestige Showroom</h4>
+            <h3><?= $testi['full_name']?></h3> 
             <p>
               <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              The best quality of the photo and good services.
+              <?= $testi['testimoni']?>
               <i class="bx bxs-quote-alt-right quote-icon-right"></i>
             </p>
           </div>
-
-          <div class="testimonial-item">
-            <img src="assets/img/bamsoet.jpg" class="testimonial-img" alt="">
-            <h3>Bambang Soesatyo</h3>
-            <h4>Ceo &amp; Founder IMI</h4>
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              The best photograph company in Jakarta and very recommended.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-          </div>
-
+        <?php endforeach;?>
         </div>
 
       </div>

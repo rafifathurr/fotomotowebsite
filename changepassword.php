@@ -4,36 +4,29 @@ require 'function/function.php';
 if(!isset($_SESSION["signin"])){
   header("Location: signin.php");
   exit;
-}elseif(!isset($_SESSION["category"])){
-  header("Location: services.php");
 }
 
-$category = $_SESSION["category"];
-$price = $_SESSION["price"];
-
-if(isset($_POST["booking"])){
-  if(bookservice($_POST)>0){
-     $_SESSION["booking"] = true;
+if(isset($_POST["change"])){
+  if(setpassbyid($_POST)>0){
      echo "
            <script type='text/javascript'>
               setTimeout(function () { 
                  let timerInterval
                  Swal.fire({
-                    title: 'Checkout Booking Successfully',
-                    text: 'Please Do Payment!',
+                    title: 'Change Password Successfully',
                     icon: 'success',
                     type: 'success',
                     showConfirmButton: false
                 })
                     .then(function () {
-                       window.location = 'payment.php';
+                       window.location = 'home.php';
                             });}, 100);
               </script>";
   }else{
     echo "
     <script type='text/javascript'>
-       setTimeout(function () { Swal.fire('Checkout Booking Failed!', 
-          '!', 
+       setTimeout(function () { Swal.fire('Change Password Failed!', 
+          '', 
           'error')}, 100);
        </script>
     ";
@@ -45,7 +38,7 @@ if(isset($_POST["booking"])){
 <html lang="en">
 
 <!-- ====== Include head ======  -->
-<?php $currentPage = "Book Service"; ?>
+<?php $currentPage = "Change Password"; ?>
 <?php include 'partials/head.php'?>
 
 <body>
@@ -58,7 +51,7 @@ if(isset($_POST["booking"])){
     <div class="container">
 
       <div class="section-titlepage">
-        <h2>Book Now</h2>
+        <h2>Change Password</h2>
       </div>
 
       <div class="row justify-content-center">
@@ -70,26 +63,15 @@ if(isset($_POST["booking"])){
                 </div> -->
                 <div class="form-group">
                   <input type="hidden" name="user_id" value="<?=$_SESSION["key"]?>">
-                  <input type="text" class="form-control" name="book_as" id="book_as" placeholder="Booking As Name" required/>
+                  <input type="password" class="form-control" name="password" id="password" placeholder="Enter your new password" required/>
                   <div class="validate"></div>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="subject" id="subject" value="<?= $category;?>" placeholder="Subject Services" readonly required/>
+                <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Rewrite your new password" required/>
                   <div class="validate"></div>
                 </div>
-                <div class="form-group">
-                  <input type="text" class="form-control numeric" name="price" id="price" value="<?= $price;?>" placeholder="Price Service" readonly required/>
-                  <div class="validate"></div>
-                </div>
-                <div class="form-group">
-                  <input type="date" class="form-control" id="datebook" name="datebook" placeholder="Date for booking" required/>
-                </div>
-                <div class="form-group">
-                  <textarea id="additional" class="form-control" name="additional" rows="6" data-rule="required" data-msg="Please write something for us" placeholder="Additional Add"></textarea>
-                  <div class="validate"></div>
-                </div>`
                 <div class="btn-wrap">
-                  <button name="booking" class="btn-buy">Book Now</button>
+                  <button name="change" class="btn-buy">Change Password</button>
                 </div>
               </form>
             </div>

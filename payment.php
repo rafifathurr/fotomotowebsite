@@ -45,7 +45,7 @@ if(!isset($_SESSION["signin"])){
 <html lang="en">
 
 <!-- ====== Include head ======  -->
-<?php $currentPage = "Book Service"; ?>
+<?php $currentPage = "Payment"; ?>
 <?php include 'partials/head.php'?>
 
 <body>
