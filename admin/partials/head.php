@@ -15,6 +15,7 @@
     <link href="../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
     <link rel="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 
     <!-- Main CSS File -->
     <?php if($currentPage == "Sign In"):?>

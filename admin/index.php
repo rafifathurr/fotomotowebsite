@@ -90,81 +90,83 @@ if(isset($_POST["finish"])){
           <p>Managing for customer booking data</p>
         </div>
         <div style="overflow-x:auto;">
-          <table id="add-row" class="display table table-striped table-hover dataTable"
+          <table id="datatable" class="display table table-striped table-hover dataTable"
                 cellspacing="0" width="100%" role="grid" aria-describedby="add-row_info"
                 style="width: 100%;">
-                <tr role="row">
-                    <th>No</th>
-                    <th>Invoice</th>
-                    <th>Name</th>
-                    <th>Booking As</th>
-                    <th>Date Booking</th>
-                    <th>Subject</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
+                <thead>
+                  <tr role="row">
+                      <th>No</th>
+                      <th>Invoice</th>
+                      <th>Name</th>
+                      <th>Booking As</th>
+                      <th>Date Booking</th>
+                      <th>Subject</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                  </tr>
+                </thead>
                 <?php $i=1;?>
                 <!-- Menampilkan data dari database menggunakan PHP -->
                 <?php foreach($neworder as $new): ?>
-                <tr>
-                    <td><?php echo $i;?></td>
-                    <td>INV/<?=$new["invoice_id"];?></td>
-                    <td><?=$new["full_name"];?></td>
-                    <td><?=$new["booking_as"];?></td>
-                    <td><?=$new["book_date"];?></td>
-                    <td><?=$new["subject"];?></td>
-                    <td style="text-align:right;">Rp. <?=number_format($new["price"],0,',','.');?>,-</td>
-                    <td>
+                <tbody>
+                  <tr>
+                      <td><?php echo $i;?></td>
+                      <td>INV/<?=$new["invoice_id"];?></td>
+                      <td><?=$new["full_name"];?></td>
+                      <td><?=$new["booking_as"];?></td>
+                      <td><?=$new["book_date"];?></td>
+                      <td><?=$new["subject"];?></td>
+                      <td style="text-align:right;">Rp. <?=number_format($new["price"],0,',','.');?>,-</td>
+                      <td>
+                        <?php if($new["status_order"]=="Payed"):?>
+                          <div style="padding:3px 8px;background-color:yellow;text-align:center;border-radius:5px;">
+                          <?=$new["status_order"];?>
+                          </div>
+                        <?php elseif($new["status_order"]=="Process" || $new["status_order"]=="Done"):?>
+                          <div style="padding:3px 8px;background-color:green;color:white;text-align:center;border-radius:5px;">
+                          <?=$new["status_order"];?>
+                          </div>
+                        <?php else:?>
+                          <div style="padding:3px 8px;background-color:red;color:white;text-align:center;border-radius:5px;">
+                          <?=$new["status_order"];?>
+                          </div>
+                        <?php endif;?>
+                      </td>
+                      <td style="display:flex;">
                       <?php if($new["status_order"]=="Payed"):?>
-                        <div style="padding:3px 8px;background-color:yellow;text-align:center;border-radius:5px;">
-                        <?=$new["status_order"];?>
-                        </div>
-                      <?php elseif($new["status_order"]=="Process" || $new["status_order"]=="Done"):?>
-                        <div style="padding:3px 8px;background-color:green;color:white;text-align:center;border-radius:5px;">
-                        <?=$new["status_order"];?>
-                        </div>
-                      <?php else:?>
-                        <div style="padding:3px 8px;background-color:red;color:white;text-align:center;border-radius:5px;">
-                        <?=$new["status_order"];?>
-                        </div>
-                      <?php endif;?>
-                    </td>
-                    <td style="display:flex;">
-                    <?php if($new["status_order"]=="Payed"):?>
+                          <form action="" method="post">
+                            <input type="hidden" name="invoice" value="<?=$new["invoice_id"]?>" >
+                            <a class="btn-action" style="padding:5px 12px;color:white;margin-right:5px;" href="detail.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Detail">
+                              <i class="fa fa-info" title="Details"></i>
+                            </a> 
+                            <a class="btn-action" style="padding:5px 8px;margin-right:5px;" href="rejectform.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Reject">
+                              <i class="fa fa-close"></i>
+                            </a>
+                            <button class="btn-action" name="process" style="padding:3px 7px;">
+                              <i class="fa fa-check" title="Process"></i>
+                            </button>
+                          </form>
+                      <?php elseif($new["status_order"]=="Process"):?>
                         <form action="" method="post">
                           <input type="hidden" name="invoice" value="<?=$new["invoice_id"]?>" >
-                          <a class="btn-action" style="padding:5px 12px;color:white;margin-right:5px;" href="detail.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Detail">
-                            <i class="fa fa-info" title="Details"></i>
-                          </a> 
-                          <a class="btn-action" style="padding:5px 8px;margin-right:5px;" href="rejectform.php?invoice_id=<?php echo $new["invoice_id"];?>" title="Reject">
-                            <i class="fa fa-close"></i>
-                          </a>
-                          <button class="btn-action" name="process" style="padding:3px 7px;">
-                            <i class="fa fa-check" title="Process"></i>
-                          </button>
+                          <a class="btn-action" style="padding:5px 12px;color:white;" href="detail.php?invoice_id=<?= $new["invoice_id"];?>"><i class="fa fa-info" title="Details"></i></a> 
+                          <button class="btn-action" name="finish" style="padding:3px 7px;">
+                              <i class="fa fa-check" title="Done"></i>
+                            </button>
                         </form>
-                    <?php elseif($new["status_order"]=="Process"):?>
-                      <form action="" method="post">
-                        <input type="hidden" name="invoice" value="<?=$new["invoice_id"]?>" >
-                        <a class="btn-action" style="padding:5px 12px;color:white;" href="detail.php?invoice_id=<?= $new["invoice_id"];?>"><i class="fa fa-info" title="Details"></i></a> 
-                        <button class="btn-action" name="finish" style="padding:3px 7px;">
-                            <i class="fa fa-check" title="Done"></i>
-                          </button>
-                      </form>
-                    <?php else:?>
-                      <form action="" method="post">
-                        <a class="btn-action" style="padding:5px 12px;color:white;" href="detail.php?invoice_id=<?= $new["invoice_id"];?>"><i class="fa fa-info" title="Details"></i></a> 
-                      </form>
-                    <?php endif;?>
-                    </td>
-                </tr>
+                      <?php else:?>
+                        <form action="" method="post">
+                          <a class="btn-action" style="padding:5px 12px;color:white;" href="detail.php?invoice_id=<?= $new["invoice_id"];?>"><i class="fa fa-info" title="Details"></i></a> 
+                        </form>
+                      <?php endif;?>
+                      </td>
+                  </tr>
+                </tbody>
                 <?php $i++;?>
                 <?php endforeach;?>
         </table>
-    
-        </div>
-       
+      </div>
     </section>
     <!-- End Contact Us Section -->
 
@@ -184,27 +186,14 @@ if(isset($_POST["finish"])){
 
   <!-- include footer -->
   <?php include 'partials/footer.php'?>
-  <script src="../dist/table.js"></script>
-  <script src="../dist/datatables.min.js"></script>
 
+</main>
 </body>
 
-<!-- <script>
-  const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-  let items = [];
-  $.each(bookings, function (index, val) {
-    items.push('<tr>');
-      items.push('<td>' + val.name + '</td>');
-      items.push('<td>' + val.email + '</td>');
-      items.push('<td>' + val.datebook + '</td>');
-      items.push('<td>' + val.subject + '</td>');
-      items.push('<td>' + val.additional + '</td>');
-      items.push('<td> <input type="checkbox"> <label>Verifikasi</label><br>');
+<script>
+  $(document).ready(function() {
+    $('#datatable').DataTable();
   });
-  $("<tbody />", { "class": "tbody-new", html:items.join("") }).appendTo("table");
-
-
-
-</script> -->
+</script>
 
 </html>
