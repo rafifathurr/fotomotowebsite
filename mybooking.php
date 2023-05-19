@@ -69,6 +69,7 @@ if(isset($_POST['filter'])){
           <table id="add-row" class="display table table-striped table-hover dataTable"
                 cellspacing="0" width="100%" role="grid" aria-describedby="add-row_info"
                 style="width: 100%;">
+                <thead>
                 <tr role="row">
                     <th>No</th>
                     <th>Invoice</th>
@@ -79,9 +80,11 @@ if(isset($_POST['filter'])){
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
+                </thead>
                 <?php $i=1;?>
                 <!-- Menampilkan data dari database menggunakan PHP -->
                 <?php foreach($neworder as $new): ?>
+                <tbody>
                 <tr>
                     <td><?php echo $i;?></td>
                     <td>INV/<?=$new["invoice_id"];?></td>
@@ -113,6 +116,7 @@ if(isset($_POST['filter'])){
                         </form>
                     </td>
                 </tr>
+                </tbody>
                 <?php $i++;?>
                 <?php endforeach;?>
         </table>

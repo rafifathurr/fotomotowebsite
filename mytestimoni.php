@@ -64,14 +64,17 @@ order by cp.id DESC");
           <table id="add-row" class="display table table-striped table-hover dataTable"
                 cellspacing="0" width="100%" role="grid" aria-describedby="add-row_info"
                 style="width: 100%;">
+                <thead>
                 <tr role="row">
                     <th>No</th>
                     <th>Type</th>
                     <th>Testimoni</th>
                 </tr>
+                </thead>
                 <?php $i=1;?>
                 <!-- Menampilkan data dari database menggunakan PHP -->
                 <?php foreach($testimoni as $testi): ?>
+                <tbody>
                 <tr>
                     <td><?php echo $i;?></td>
                     <?php if($testi["type"]==1):?>
@@ -81,6 +84,7 @@ order by cp.id DESC");
                     <?php endif;?>
                     <td><?=$testi["testimoni"];?></td>
                 </tr>
+                </tbody>
                 <?php $i++;?>
                 <?php endforeach;?>
         </table>
